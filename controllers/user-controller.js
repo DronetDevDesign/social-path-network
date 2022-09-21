@@ -35,7 +35,7 @@ const userController = {
       .catch(err => res.status(400).json(err));
   },
 
-  // PUT update user by id > PUT /api/pizzas/:id <
+  // PUT update user by id > PUT /api/users/:id <
   updateUser({ params, body }, res) {
     User.findOneAndUpdate({ _id: params.id }, body, { new: true })
       .then(dbUserData => {
@@ -48,7 +48,7 @@ const userController = {
       .catch(err => res.status(400).json(err));
   },
 
-  // DELETE user from the database > DELETE /api/pizzas/:id <
+  // DELETE user from the database > DELETE /api/users/:id <
   deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.id })
       .then(dbUserData => {

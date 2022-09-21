@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-// Friend schema ==> VIRTUAL
+// FRIEND schema ==> VIRTUAL
 const FriendSchema = new Schema(
   {
     friends: [{
@@ -15,7 +15,7 @@ const FriendSchema = new Schema(
   }
 );
 
-// User schema
+// USER schema
 const UserSchema = new Schema(
   {
     username: {
@@ -46,7 +46,7 @@ const UserSchema = new Schema(
   }
 );
 
-// add virtuals
+// adding virtual
 UserSchema.virtual('friendCount').get(function () {
   return this.friends.length;
 });
