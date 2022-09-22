@@ -1,14 +1,18 @@
 const { Schema, model } = require('mongoose');
+// const dateFormat = require('../utils/dateFormat');
 
 // FRIEND schema ==> VIRTUAL
 const FriendSchema = new Schema(
   {
-    friends: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }]
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      },
+    ]
   },
   {
+    timestamps: true,
     toJSON: {
       getters: true
     }
@@ -31,16 +35,20 @@ const UserSchema = new Schema(
       // validate: [validateEmail, 'Please enter a valid email address'],
       match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email address']
     },
-    thoughts: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Thoughts'
-    }],
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Thought'
+      },
+    ],
     friends: [FriendSchema]
   },
   {
+    timestamps: true,
     toJSON: {
       virtuals: true,
-      getters: true
+      getters: true,
+      timestamps: true,
     },
     id: false
   }
