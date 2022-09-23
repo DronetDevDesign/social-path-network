@@ -2,6 +2,7 @@ const { Thought, User, Reaction } = require('../models');
 
 
 const thoughtController = {
+  // ================ ADD REACTION =================
   addReaction(req, res) {
     Reaction.create(req.body)
       .then(reactionResponse => {
@@ -18,7 +19,21 @@ const thoughtController = {
       })
       .catch((err) => res.status(500).json(err));
   },
+  // ================ ADD REACTION =================
 
+  // ================ DELETE REACTION =================
+  removeReaction({ params }, res) {
+   Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+     { $pull: { reactions: { reactionId: params.reactionId } } },
+      { new: true }
+    )
+      .then(dbUserData => res.json(dbPUserData))
+      .catch(err => res.json(err));
+  },
+  // ================ DELETE REACTION =================
+
+  // GET all THOUGHTS
   getAllThought(req, res) {
     Thought.find({})
       .populate({ path: 'reactions', select: '-__v' })

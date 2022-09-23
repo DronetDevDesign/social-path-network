@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 // USER schema
 const UserSchema = new Schema(
@@ -26,7 +26,7 @@ const UserSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'User'
       },
-    ]
+    ],
   },
   {
     timestamps: true,
