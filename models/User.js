@@ -1,23 +1,4 @@
 const { Schema, model } = require('mongoose');
-// const dateFormat = require('../utils/dateFormat');
-
-// FRIEND schema ==> VIRTUAL
-const FriendSchema = new Schema(
-  {
-    friends: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-      },
-    ]
-  },
-  {
-    timestamps: true,
-    toJSON: {
-      getters: true
-    }
-  }
-);
 
 // USER schema
 const UserSchema = new Schema(
@@ -41,7 +22,12 @@ const UserSchema = new Schema(
         ref: 'Thought'
       },
     ],
-    friends: [FriendSchema]
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      },
+    ]
   },
   {
     timestamps: true,

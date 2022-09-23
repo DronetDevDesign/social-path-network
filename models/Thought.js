@@ -1,36 +1,4 @@
 const { Schema, model } = require('mongoose');
-// const dateFormat = require('../utils/dateFormat');
-
-// Reaction schema ==> VIRTUAL
-const ReactionSchema = new Schema(
-  {
-    reactionId: [
-      {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId()
-      },
-    ],
-    reactionBody: {
-      type: String,
-      required: true,
-      maxLength: 280
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    createdAt: { 
-      type: Date, 
-      default: Date.now 
-    },
-  },
-  {
-    timestamps: true,
-    toJSON: {
-      getters: true
-    }
-  }
-);
 
 // Thought schema:
 const ThoughtSchema = new Schema(
@@ -50,7 +18,12 @@ const ThoughtSchema = new Schema(
       type: String,
       required: true,
     },
-    reactions: [ReactionSchema]
+    reactions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Reaction'
+      }
+    ]
   },
   {
     timestamps: true,
@@ -71,28 +44,3 @@ const Thought = model('Thought', ThoughtSchema);
 
 module.exports = { Thought };
 
-
-// let schema = new mongoose.Schema(
-//   {
-//     name: String,
-//     dob: {
-//       type: Date,
-//       get: (date) => {
-//         if (date) return date.toISOString().split("T")[0];
-//       },
-//     },
-
-//     createdAt: {
-//       type: Date,
-//       get: (date) => timeSince(date),
-//     }
-//         updatedAt: {
-//       type: Date,
-//       get: (date) => timeSince(date),
-//     },
-//   },
-//   {
-//     timestamps: true,
-//     toJSON: { getters: true, virtuals: true },
-//   }
-// );

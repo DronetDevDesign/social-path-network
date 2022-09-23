@@ -1,9 +1,29 @@
-const { Thought, User } = require('../models');
+const { Thought, User, Reaction } = require('../models');
+
 
 const thoughtController = {
-  // getAllThought(req, res) {
+  addReaction(req, res) {
+    Reaction.create(req.body)
+    .then(reactionResponse => {
+      const reactionId = reactionResponse.reactionId
+      console.log(reactionId);
+      thought.findOneAndUpdate({ _id: req.params.thoughtId }, {
+        // read docs
+        $push: {reactions: reactionId}
+      }, {new: true}).then(thoughtData => {
+        res.json(thoughtData)
+      }).catch((err) => res.status(500).json(err));
+    })
+    .catch((err) => res.status(500).json(err));
+  },
 
-  // }
+  getAllThought(req, res) {
+    Thought.find({})
+      .populate({ path: 'reactions', select: '-__v' })
+      .then((thoughts) => res.json(thoughts))
+      .catch((err) => res.status(500).json(err));
+  },
+
   // add thought to USER
   addThought({ params, body }, res) {
     console.log(body);
