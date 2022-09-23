@@ -4,17 +4,19 @@ const { Thought, User, Reaction } = require('../models');
 const thoughtController = {
   addReaction(req, res) {
     Reaction.create(req.body)
-    .then(reactionResponse => {
-      const reactionId = reactionResponse.reactionId
-      console.log(reactionId);
-      thought.findOneAndUpdate({ _id: req.params.thoughtId }, {
-        // read docs
-        $push: {reactions: reactionId}
-      }, {new: true}).then(thoughtData => {
-        res.json(thoughtData)
-      }).catch((err) => res.status(500).json(err));
-    })
-    .catch((err) => res.status(500).json(err));
+      .then(reactionResponse => {
+        const reactionId = reactionResponse.reactionId
+        console.log(reactionId);
+        thought.findOneAndUpdate(
+          { _id: req.params.thoughtId },
+          { $push: { reactions: reactionId } },
+          { new: true })
+          .then(thoughtData => {
+            res.json(thoughtData)
+          })
+          .catch((err) => res.status(500).json(err));
+      })
+      .catch((err) => res.status(500).json(err));
   },
 
   getAllThought(req, res) {
@@ -43,6 +45,22 @@ const thoughtController = {
         res.json(dbUserData);
       })
       .catch(err => res.json(err));
+  },
+
+  getThoughtById({ params }, res) {
+    Thought.findOne({ _id: params.thoughtId })
+      .then(dbUserData => {
+        // if no user is found send 404
+        if (!dbUserData) {
+          res.status(404).json({ message: 'No thought found with this id!' });
+          return;
+        }
+        res.json(dbUserData);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+      });
   },
 
   // remove thought
