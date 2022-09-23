@@ -4,18 +4,12 @@ const { Thought, User, Reaction } = require('../models');
 const thoughtController = {
   // ================ ADD REACTION =================
   addReaction(req, res) {
-    Reaction.create(req.body)
-      .then(reactionResponse => {
-        const reactionId = reactionResponse.reactionId
-        console.log(reactionId);
-        thought.findOneAndUpdate(
-          { _id: req.params.thoughtId },
-          { $push: { reactions: reactionId } },
-          { new: true })
-          .then(thoughtData => {
-            res.json(thoughtData)
-          })
-          .catch((err) => res.status(500).json(err));
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true })
+      .then(thoughtData => {
+        res.json(thoughtData)
       })
       .catch((err) => res.status(500).json(err));
   },
@@ -23,9 +17,9 @@ const thoughtController = {
 
   // ================ DELETE REACTION =================
   removeReaction({ params }, res) {
-   Thought.findOneAndUpdate(
+    Thought.findOneAndUpdate(
       { _id: params.thoughtId },
-     { $pull: { reactions: { reactionId: params.reactionId } } },
+      { $pull: { reactions: { reactionId: params.reactionId } } },
       { new: true }
     )
       .then(dbUserData => res.json(dbPUserData))
