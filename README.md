@@ -44,7 +44,7 @@ The Techy Techs Blog is a fun way to get the latest trends, questions and soluti
 
 ### To install all packages use this command in the the terminal:
 
-### `npm i`
+`npm i`
 
 <br>
 
@@ -52,7 +52,7 @@ The Techy Techs Blog is a fun way to get the latest trends, questions and soluti
 
 ### To start use this command in the the terminal: 
 
-### `npm start`
+`npm start`
 
 <br>
 
