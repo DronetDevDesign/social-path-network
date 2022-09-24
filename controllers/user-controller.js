@@ -29,55 +29,30 @@ const userController = {
       });
   },
 
-  // POST a new user > POST /api/users <
+  // POST a new user > POST /api/users/<userId>/friends/
   createUser({ body }, res) {
     User.create(body)
       .then(dbUserData => res.json(dbUserData))
       .catch(err => res.status(400).json(err));
   },
 
-  // ================ ADD FRIEND =================
-  // POST a new friend > POST /api/users/friends <
-  // addFriend({ body }, res) {
-  //  Friend.create(body)
-  //     .then(dbUserData => res.json(dbUserData))
-  //     .catch(err => res.status(400).json(err));
-  // },
-  // ================ ADD FRIEND =================
-  // addFriend({ params, body }, res) {
-  //   console.log(body);
-  //   Friend.create(body)
-  //     .then(friendResponse => {
-  //       const friendId = friendResponse.reactionId
-  //       console.log(friendId);
-  //       user.findOneAndUpdate(
-  //         { _id: req.params.userId },
-  //         { $push: { friends: friendId } },
-  //         { new: true })
-  //         .then(userData => {
-  //           res.json(userData)
-  //         })
-  //         .catch((err) => res.status(500).json(err));
-  //     })
-  //     .catch((err) => res.status(500).json(err));
-  // },
-  // ================ ADD FRIEND =================
-  addFriend({ params, body }, res) {
+  // POST a new friend > POST 
+  addFriend(req, res) {
+    console.log('632d9cefc4ee862a7095a845')
     User.findOneAndUpdate(
-      { _id: params.userId },
-      { $push: { friends: body } },
-      { new: true }
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.body.friendId } },
+      { runValidators: true, new: true }
     )
-      .then(dbPizzaData => {
-        if (!dbPizzaData) {
+      .then(dbUserData => {
+        if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
-        res.json(dbPizzaData);
+        res.json(dbUserData);
       })
       .catch(err => res.json(err));
   },
-  // ================ ADD FRIEND =================
 
   // PUT update user by id > PUT /api/users/:id <
   updateUser({ params, body }, res) {
@@ -105,9 +80,9 @@ const userController = {
       .catch(err => res.status(400).json(err));
   },
 
-  // DELETE friend from the database > DELETE /api/users/:id/friends <
+  // DELETE friend > /api/users/<userId>/friends/<friendId>
   deleteFriend({ params }, res) {
-    User.findOneAndDelete({ _id: params.id })
+    User.findOneAndDelete({ _id: params.friendId })
       .then(dbUserData => {
         if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id!' });
