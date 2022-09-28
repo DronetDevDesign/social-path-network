@@ -1,15 +1,13 @@
 # social-path-network
-## Network Your Social Path
-
-## A blog for coders who like to get technical about subjects pertaining to programming
+## When choosing friends, always choose wisely!
 
 ## Purpose:
 
-The Techy Techs Blog is a fun way to get the latest trends, questions and solutions about programming languages. Sign up and get a profile by creating a username, your email address and a password! It's extremely easy to use!
+An NPM app used to create, update and delete USERS, THOUGHTS, FRIENDS and REACTIONS. This app can be tested in INSOMNIA!
 
-## GitHub Repository Link:
+## ScreenCastify Link:
 
-## https://github.com/DronetDevDesign/social-path-network
+## https://watch.screencastify.com/v/9kocaKzdOuwLuIyVMGc1
 
 <br>
 
@@ -23,7 +21,7 @@ The Techy Techs Blog is a fun way to get the latest trends, questions and soluti
 
 <br>
 <div align="left">
-    <img src="./assets/images/techy-techs-blog-screenshot.jpg" width="800px" /> 
+    <img src="./images/social-path-network.jpg" width="800px" /> 
 </div>
 <br>
 
